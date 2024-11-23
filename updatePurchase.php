@@ -2,8 +2,8 @@
 
 // Updated script - 2018-05-09
 
-	require_once('../../inc/config/constants.php');
-	require_once('../../inc/config/db.php');
+	require_once'../../inc/config/constants.php';
+	require_once'../../inc/config/db.php';
 	
 	if(isset($_POST['purchaseDetailsPurchaseID'])){
 

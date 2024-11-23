@@ -1,6 +1,6 @@
 <?php
-	require_once('../../inc/config/constants.php');
-	require_once('../../inc/config/db.php');
+	require_once'../../inc/config/constants.php';
+	require_once'../../inc/config/db.php';
 	
 	$sql = "SELECT MAX(saleID) FROM sale";
 	$stmt = $conn->prepare($sql);

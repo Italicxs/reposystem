@@ -1,6 +1,6 @@
 <?php
-	require_once('../../inc/config/constants.php');
-	require_once('../../inc/config/db.php');
+	require_once'../../inc/config/constants.php';
+	require_once'../../inc/config/db.php';
 
 	// Execute the script if the POST request is submitted
 	if(isset($_POST['purchaseDetailsPurchaseID'])){

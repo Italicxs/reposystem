@@ -2,6 +2,9 @@
 	require_once'../../inc/config/constants.php';
 	require_once'../../inc/config/db.php';
 	
+	// Definir una constante para la cadena repetitiva
+	define('CLOSE_TABLE_DATA', '</td>');
+
 	$uPrice = 0;
 	$qty = 0;
 	$totalPrice = 0;
@@ -35,16 +38,16 @@
 		$totalPrice = $uPrice * $qty * ((100 - $discount)/100);
 		
 		$output .= '<tr>' .
-						'<td>' . $row['saleID'] . '</td>' .
-						'<td>' . $row['itemNumber'] . '</td>' .
-						'<td>' . $row['customerID'] . '</td>' .
-						'<td>' . $row['customerName'] . '</td>' .
-						'<td>' . $row['itemName'] . '</td>' .
-						'<td>' . $row['saleDate'] . '</td>' .
-						'<td>' . $row['discount'] . '</td>' .
-						'<td>' . $row['quantity'] . '</td>' .
-						'<td>' . $row['unitPrice'] . '</td>' .
-						'<td>' . $totalPrice . '</td>' .
+						'<td>' . $row['saleID'] . CLOSE_TABLE_DATA .
+						'<td>' . $row['itemNumber'] . CLOSE_TABLE_DATA .
+						'<td>' . $row['customerID'] . CLOSE_TABLE_DATA .
+						'<td>' . $row['customerName'] . CLOSE_TABLE_DATA .
+						'<td>' . $row['itemName'] . CLOSE_TABLE_DATA .
+						'<td>' . $row['saleDate'] . CLOSE_TABLE_DATA .
+						'<td>' . $row['discount'] . CLOSE_TABLE_DATA .
+						'<td>' . $row['quantity'] . CLOSE_TABLE_DATA .
+						'<td>' . $row['unitPrice'] . CLOSE_TABLE_DATA .
+						'<td>' . $totalPrice . CLOSE_TABLE_DATA .
 					'</tr>';
 	}
 	
@@ -68,5 +71,3 @@
 				</table>';
 	echo $output;
 ?>
-
-

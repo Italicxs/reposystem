@@ -50,14 +50,21 @@
 			}
 			
 			// Create image folder for uploading images
-			$itemImageFolder = $baseImageFolder . $itemNumber;
-			if(is_dir($itemImageFolder)){
-				// Folder already exist. Hence, do nothing
-			} else {
-				// Folder does not exist, Hence, create it
-				mkdir($itemImageFolder);
+			$itemImageFolder = $baseImageFolder . basename($itemNumber); // Limitar a un nombre de archivo seguro
+			$itemImageFolderPath = realpath($baseImageFolder) . DIRECTORY_SEPARATOR . $itemNumber;
+
+			if (strpos($itemImageFolderPath, realpath($baseImageFolder)) !== 0) {
+			    echo '<div class="alert alert-danger"><button type="button" class="close" data-dismiss="alert">&times;</button>Invalid item number provided.</div>';
+			    exit();
 			}
-			
+			if (!is_dir($itemImageFolder)) {
+			    // Si la carpeta no existe, crearla de forma segura
+			    if (!mkdir($itemImageFolder, 0755, true)) {
+			        echo '<div class="alert alert-danger"><button type="button" class="close" data-dismiss="alert">&times;</button>Failed to create directory for item images.</div>';
+			        exit();
+			    }
+			}
+						
 			// Calculate the stock values
 			$stockSql = 'SELECT stock FROM item WHERE itemNumber=:itemNumber';
 			$stockStatement = $conn->prepare($stockSql);

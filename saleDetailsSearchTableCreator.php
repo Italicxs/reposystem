@@ -30,7 +30,7 @@
 				</thead>
 				<tbody>';
 	
-	// Create table rows from the selected data
+	// Crear las filas de la tabla a partir de los datos seleccionados
 	while($row = $saleDetailsSearchStatement->fetch(PDO::FETCH_ASSOC)){
 		$uPrice = $row['unitPrice'];
 		$qty = $row['quantity'];

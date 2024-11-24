@@ -2,6 +2,9 @@
 	require_once'../../inc/config/constants.php';
 	require_once'../../inc/config/db.php';
 	
+	// Definir una constante para "</td>"
+	define('CLOSE_TABLE_DATA', '</td>');
+	
 	$uPrice = 0;
 	$qty = 0;
 	$totalPrice = 0;
@@ -33,15 +36,15 @@
 		$totalPrice = $uPrice * $qty;
 		
 		$output .= '<tr>' .
-						'<td>' . $row['purchaseID'] . '</td>' .
-						'<td>' . $row['itemNumber'] . '</td>' .
-						'<td>' . $row['purchaseDate'] . '</td>' .
-						'<td>' . $row['itemName'] . '</td>' .
-						'<td>' . $row['unitPrice'] . '</td>' .
-						'<td>' . $row['quantity'] . '</td>' .
-						'<td>' . $row['vendorName'] . '</td>' .
-						'<td>' . $row['vendorID'] . '</td>' .
-						'<td>' . $totalPrice . '</td>' .
+						'<td>' . $row['purchaseID'] . CLOSE_TABLE_DATA .
+						'<td>' . $row['itemNumber'] . CLOSE_TABLE_DATA .
+						'<td>' . $row['purchaseDate'] . CLOSE_TABLE_DATA .
+						'<td>' . $row['itemName'] . CLOSE_TABLE_DATA .
+						'<td>' . $row['unitPrice'] . CLOSE_TABLE_DATA .
+						'<td>' . $row['quantity'] . CLOSE_TABLE_DATA .
+						'<td>' . $row['vendorName'] . CLOSE_TABLE_DATA .
+						'<td>' . $row['vendorID'] . CLOSE_TABLE_DATA .
+						'<td>' . $totalPrice . CLOSE_TABLE_DATA .
 					'</tr>';
 	}
 	
@@ -64,5 +67,3 @@
 				</table>';
 	echo $output;
 ?>
-
-

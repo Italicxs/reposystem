@@ -11,12 +11,18 @@
 		
 		if(!empty($itemImageItemNumber)){
 			
+			// Sanitize the item number to ensure it doesn't contain malicious content
+			$itemImageItemNumber = filter_var($itemImageItemNumber, FILTER_SANITIZE_STRING);
+			
+			// Ensure the item number is alphanumeric and of a reasonable length (e.g., 10 characters)
+			if (!preg_match('/^[a-zA-Z0-9]{1,10}$/', $itemImageItemNumber)) {
+				echo '<div class="alert alert-danger"><button type="button" class="close" data-dismiss="alert">&times;</button>Invalid item number format.</div>';
+				exit();
+			}
+
 			// Check if the user has selected an image
 			if($_FILES['itemImageFile']['name'] != ''){
 				// Both itemNumber and image file given. Hence, proceed to next steps
-				
-				// Sanitize item number
-				$itemImageItemNumber = filter_var($itemImageItemNumber, FILTER_SANITIZE_STRING);
 				
 				// Check if itemNumber is in DB
 				$itemNumberSql = 'SELECT * FROM item WHERE itemNumber = :itemNumber';
@@ -33,22 +39,26 @@
 					if(in_array($extension, $allowedTypes)){
 						// All good so far...
 						
-						$baseImageFolder = '../../data/item_images/';
-						$itemImageFolder = '';
-						$fileName = time() . '_' . basename($_FILES['itemImageFile']['name']);
+						// Ensure safe directory path construction
+						$itemImageFolder = realpath($baseImageFolder . $itemImageItemNumber);
 						
-						// Create image folder for uploading images
-						$itemImageFolder = $baseImageFolder . $itemImageItemNumber . '/';
-						if(is_dir($itemImageFolder)){
-							// Folder already exists. Hence, do nothing
-						} else {
-							// Folder does not exist, Hence, create it
-							mkdir($itemImageFolder);
+						// Check if the path is within the allowed directory
+						if (strpos($itemImageFolder, realpath($baseImageFolder)) !== 0) {
+							echo '<div class="alert alert-danger"><button type="button" class="close" data-dismiss="alert">&times;</button>Invalid directory path.</div>';
+							exit();
 						}
 						
-						$targetPath = $itemImageFolder . $fileName;
-						//echo $targetPath;
-						//exit();
+						$fileName = time() . '_' . basename($_FILES['itemImageFile']['name']);
+						
+						// Check if the folder exists; if not, create it
+						if (!is_dir($itemImageFolder)) {
+							if (!mkdir($itemImageFolder, 0777, true)) {
+								echo '<div class="alert alert-danger"><button type="button" class="close" data-dismiss="alert">&times;</button>Failed to create directory.</div>';
+								exit();
+							}
+						}
+						
+						$targetPath = $itemImageFolder . DIRECTORY_SEPARATOR . $fileName;
 						
 						// Upload file to server
 						if(move_uploaded_file($_FILES['itemImageFile']['tmp_name'], $targetPath)){
@@ -67,9 +77,9 @@
 						}
 						
 					} else {
-					// Image type is not allowed
-					echo '<div class="alert alert-danger"><button type="button" class="close" data-dismiss="alert">&times;</button>Image type is not allowed. Please select a valid image.</div>';
-					exit();
+						// Image type is not allowed
+						echo '<div class="alert alert-danger"><button type="button" class="close" data-dismiss="alert">&times;</button>Image type is not allowed. Please select a valid image.</div>';
+						exit();
 					}
 				}
 				
@@ -85,5 +95,4 @@
 		}
 
 	}
-
 ?>

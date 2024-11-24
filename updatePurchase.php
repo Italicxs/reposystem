@@ -1,6 +1,9 @@
 <?php
 
-// Updated script - 2018-05-09
+// Definir una constante para la sentencia SQL repetitiva
+define('UPDATE_ITEM_STOCK_SQL', 'UPDATE item SET stock = :stock WHERE itemNumber = :itemNumber');
+
+// Restante del código...
 
 	require_once'../../inc/config/constants.php';
 	require_once'../../inc/config/db.php';
@@ -108,8 +111,7 @@
 					$newItemNewStock = $originalQuantityForNewItem + $enteredQuantityForNewItem;
 					
 					// UPDATE the stock for new item in item table
-					$newItemStockUpdateSql = 'UPDATE item SET stock = :stock WHERE itemNumber = :itemNumber';
-					$newItemStockUpdateStatement = $conn->prepare($newItemStockUpdateSql);
+					$newItemStockUpdateStatement = $conn->prepare(UPDATE_ITEM_STOCK_SQL);
 					$newItemStockUpdateStatement->execute(['stock' => $newItemNewStock, 'itemNumber' => $purchaseDetailsItemNumber]);
 					
 					// Get the current stock of the previous item
@@ -123,8 +125,7 @@
 					$previousItemNewStock = $currentQuantityForPreviousItem - $quantityInOriginalOrder;
 					
 					// UPDATE the stock for previous item in item table
-					$previousItemStockUpdateSql = 'UPDATE item SET stock = :stock WHERE itemNumber = :itemNumber';
-					$previousItemStockUpdateStatement = $conn->prepare($previousItemStockUpdateSql);
+					$previousItemStockUpdateStatement = $conn->prepare(UPDATE_ITEM_STOCK_SQL);
 					$previousItemStockUpdateStatement->execute(['stock' => $previousItemNewStock, 'itemNumber' => $originalOrderItemNumber]);
 					
 					// Finally UPDATE the purchase table for new item
@@ -153,8 +154,7 @@
 						$newStock = $originalStockInItemTable + ($quantityInNewOrder - $quantityInOriginalOrder);
 						
 						// Update the new stock value in item table.
-						$updateStockSql = 'UPDATE item SET stock = :stock WHERE itemNumber = :itemNumber';
-						$updateStockStatement = $conn->prepare($updateStockSql);
+						$updateStockStatement = $conn->prepare(UPDATE_ITEM_STOCK_SQL);
 						$updateStockStatement->execute(['stock' => $newStock, 'itemNumber' => $purchaseDetailsItemNumber]);
 						
 						// Next, update the purchase table

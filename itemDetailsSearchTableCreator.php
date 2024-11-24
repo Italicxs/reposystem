@@ -1,11 +1,14 @@
 <?php
 	require_once'../../inc/config/constants.php';
 	require_once'../../inc/config/db.php';
+
+	// Definir constante para la cadena "</td>"
+	define('CLOSE_TABLE_DATA', '</td>');
 	
 	$itemDetailsSearchSql = 'SELECT * FROM item';
 	$itemDetailsSearchStatement = $conn->prepare($itemDetailsSearchSql);
 	$itemDetailsSearchStatement->execute();
-	
+
 	$output = '<table id="itemDetailsTable" class="table table-sm table-striped table-bordered table-hover" style="width:100%">
 				<thead>
 					<tr>
@@ -20,24 +23,23 @@
 					</tr>
 				</thead>
 				<tbody>';
-	
-	// Create table rows from the selected data
-	while($row = $itemDetailsSearchStatement->fetch(PDO::FETCH_ASSOC)){
-		
+
+	// Crear las filas de la tabla a partir de los datos seleccionados
+	while($row = $itemDetailsSearchStatement->fetch(PDO::FETCH_ASSOC)) {
 		$output .= '<tr>' .
-						'<td>' . $row['productID'] . '</td>' .
-						'<td>' . $row['itemNumber'] . '</td>' .
-						'<td><a href="#" class="itemDetailsHover" data-toggle="popover" id="' . $row['productID'] . '">' . $row['itemName'] . '</a></td>' .
-						'<td>' . $row['discount'] . '</td>' .
-						'<td>' . $row['stock'] . '</td>' .
-						'<td>' . $row['unitPrice'] . '</td>' .
-						'<td>' . $row['status'] . '</td>' .
-						'<td>' . $row['description'] . '</td>' .
+						'<td>' . $row['productID'] . CLOSE_TABLE_DATA .
+						'<td>' . $row['itemNumber'] . CLOSE_TABLE_DATA .
+						'<td><a href="#" class="itemDetailsHover" data-toggle="popover" id="' . $row['productID'] . '">' . $row['itemName'] . '</a></td>' . CLOSE_TABLE_DATA .
+						'<td>' . $row['discount'] . CLOSE_TABLE_DATA .
+						'<td>' . $row['stock'] . CLOSE_TABLE_DATA .
+						'<td>' . $row['unitPrice'] . CLOSE_TABLE_DATA .
+						'<td>' . $row['status'] . CLOSE_TABLE_DATA .
+						'<td>' . $row['description'] . CLOSE_TABLE_DATA .
 					'</tr>';
 	}
-	
+
 	$itemDetailsSearchStatement->closeCursor();
-	
+
 	$output .= '</tbody>
 					<tfoot>
 						<tr>

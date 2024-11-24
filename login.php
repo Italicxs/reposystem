@@ -6,10 +6,13 @@
 		header('Location: index.php');
 		exit();
 	}
-	
+
 	require_once'inc/config/constants.php';
 	require_once'inc/config/db.php';
 	require_once'inc/header.html';
+
+	// Definir la constante para footer.php
+	define('FOOTER_FILE', 'inc/footer.php');
 ?>
   <body>
 
@@ -33,7 +36,6 @@ $action = '';
 					  <div class="form-group">
 						<label for="registerFullName">Name<span class="requiredIcon">*</span></label>
 						<input type="text" class="form-control" id="registerFullName" name="registerFullName">
-						<!-- <small id="emailHelp" class="form-text text-muted"></small> -->
 					  </div>
 					   <div class="form-group">
 						<label for="registerUsername">Username<span class="requiredIcon">*</span></label>
@@ -58,7 +60,8 @@ $action = '';
 			  </div>
 			</div>
 <?php
-			require 'inc/footer.php';
+			// Usar la constante FOOTER_FILE
+			require FOOTER_FILE;
 			echo '</body></html>';
 			exit();
 		} elseif($action == 'resetPassword'){
@@ -96,7 +99,8 @@ $action = '';
 			  </div>
 			</div>
 <?php
-			require 'inc/footer.php';
+			// Usar la constante FOOTER_FILE
+			require FOOTER_FILE;
 			echo '</body></html>';
 			exit();
 		}
@@ -132,7 +136,8 @@ $action = '';
       </div>
     </div>
 <?php
-	require 'inc/footer.php';
+	// Usar la constante FOOTER_FILE
+	require FOOTER_FILE;
 ?>
   </body>
 </html>

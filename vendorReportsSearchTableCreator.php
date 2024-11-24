@@ -6,6 +6,9 @@
 	$vendorDetailsSearchStatement = $conn->prepare($vendorDetailsSearchSql);
 	$vendorDetailsSearchStatement->execute();
 
+	// Definir constantes para los literales repetidos
+	define('TD_CLOSE', '</td>');
+
 	$output = '<table id="vendorReportsTable" class="table table-sm table-striped table-bordered table-hover" style="width:100%">
 				<thead>
 					<tr>
@@ -23,19 +26,19 @@
 				</thead>
 				<tbody>';
 	
-	// Create table rows from the selected data
+	// Crear filas de la tabla desde los datos seleccionados
 	while($row = $vendorDetailsSearchStatement->fetch(PDO::FETCH_ASSOC)){
 		$output .= '<tr>' .
-						'<td>' . $row['vendorID'] . '</td>' .
-						'<td>' . $row['fullName'] . '</td>' .
-						'<td>' . $row['email'] . '</td>' .
-						'<td>' . $row['mobile'] . '</td>' .
-						'<td>' . $row['phone2'] . '</td>' .
-						'<td>' . $row['address'] . '</td>' .
-						'<td>' . $row['address2'] . '</td>' .
-						'<td>' . $row['city'] . '</td>' .
-						'<td>' . $row['district'] . '</td>' .
-						'<td>' . $row['status'] . '</td>' .
+						'<td>' . $row['vendorID'] . TD_CLOSE .
+						'<td>' . $row['fullName'] . TD_CLOSE .
+						'<td>' . $row['email'] . TD_CLOSE .
+						'<td>' . $row['mobile'] . TD_CLOSE .
+						'<td>' . $row['phone2'] . TD_CLOSE .
+						'<td>' . $row['address'] . TD_CLOSE .
+						'<td>' . $row['address2'] . TD_CLOSE .
+						'<td>' . $row['city'] . TD_CLOSE .
+						'<td>' . $row['district'] . TD_CLOSE .
+						'<td>' . $row['status'] . TD_CLOSE .
 					'</tr>';
 	}
 	
